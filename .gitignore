@@ -1,0 +1,15 @@
+# Project place file
+/roblox-first-project.rbxlx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+
+# Sourcemap used for luau-lsp
+sourcemap.json
+
+# Type files used for luau-lsp
+/types/
+
+# Built project map file
+roblox-first-project.rbxl
