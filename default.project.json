@@ -39,7 +39,7 @@
           "Locked": true,
           "Position": [
             0,
-            -10,
+            0,
             0
           ],
           "Size": [
@@ -47,6 +47,14 @@
             20,
             512
           ]
+        }
+      },
+      "MovingBlock": {
+        "$className": "Part",
+        "$properties": {
+          "Anchored": true,
+          "Position": [0, 15, 0],
+          "Size": [4, 4, 4]
         }
       }
     },
