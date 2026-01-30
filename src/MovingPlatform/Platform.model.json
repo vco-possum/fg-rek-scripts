@@ -1,9 +1,54 @@
 {
-  "ClassName": "Part",
-  "Properties": {
-    "Anchored": true,
-    "Tags": [ "animatable" ],
-    "Size": [4, 1, 4],
-    "Position": [0, 5, 0]
-  }
+  "className": "Folder",
+  "children": [
+    {
+      "className": "Part",
+      "name": "Platform",
+      "properties": {
+        "Anchored": false,
+        "Size": [4, 2, 4],
+        "Position": [0, 5, 0],
+        "Tags": [ "animatable" ]
+      },
+      "children": [
+        {
+          "className": "Attachment",
+          "name": "PlatformAttachment",
+          "attributes": {
+            "Rojo_Id": "platform_attachment"
+          }
+        },
+        {
+          "className": "AlignPosition",
+          "name": "PlatformAlignPosition",
+          "properties": {
+            "ApplyAtCenterOfMass": true,
+            "RigidityEnabled": false,
+            "Mode": "OneAttachment",
+            "Position": [0, 5, 0],
+          },
+          "attributes": {
+            "Rojo_Target_Attachment0": "platform_attachment"
+          }
+        },
+        {
+          "className": "AlignOrientation",
+          "name": "PlatformAlignOrientation",
+          "properties": {
+            "RigidityEnabled": true,
+            "Mode": "OneAttachment",
+            "CFrame": [
+              0, 0, 0,
+              0, 0, 0,
+              0, 0, 0,
+              0, 0, 0
+            ],
+          },
+          "attributes": {
+            "Rojo_Target_Attachment0": "platform_attachment"
+          }
+        }
+      ]
+    },
+  ]
 }

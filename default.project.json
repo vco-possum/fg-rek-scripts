@@ -51,59 +51,62 @@
       },
       "MovingPlatform": {
         "$path": "src/MovingPlatform/Platform.model.json",
-        "Point1": {
-          "$path": "src/MovingPlatform/PathPoint.model.json",
-          "$properties": {
-            "Attributes": {
-              "Order": { "Float64": 1 },
-              "EasingFunction": { "String": "InOutLin" },
-              "Duration": { "Float64": 1 }
+        "Points": {
+          "$className": "Folder",
+          "Point1": {
+            "$path": "src/MovingPlatform/PathPoint.model.json",
+            "$properties": {
+              "Attributes": {
+                "Order": { "Float64": 1 },
+                "EasingFunction": { "String": "InOutLin" },
+                "Duration": { "Float64": 1 }
+              },
+              "Position": [0, 5, 0],
             },
-            "Position": [0, 5, 0],
           },
-        },
-        "Point2": {
-          "$path": "src/MovingPlatform/PathPoint.model.json",
-          "$properties": {
-            "Attributes": {
-              "Order": { "Float64": 2 },
-              "EasingFunction": { "String": "InOutSine" },
-              "Duration": { "Float64": 1 }
-            },
-            "Position": [0, 10, 15],
-          }
-        },
-        "Point3": {
-          "$path": "src/MovingPlatform/PathPoint.model.json",
-          "$properties": {
-            "Attributes": {
-              "Order": { "Float64": 3 },
-              "EasingFunction": { "String": "InOutQuad" },
-              "Duration": { "Float64": 1 }
-            },
-            "Position": [0, 5, 30],
-          }
-        },
-        "Point4": {
-          "$path": "src/MovingPlatform/PathPoint.model.json",
-          "$properties": {
-            "Attributes": {
-              "Order": { "Float64": 4 },
-              "EasingFunction": { "String": "InExponential" },
-              "Duration": { "Float64": 2 }
-            },
-            "Position": [0, 10, 45],
-          }
-        },
-        "Point5": {
-          "$path": "src/MovingPlatform/PathPoint.model.json",
-          "$properties": {
-            "Attributes": {
-              "Order": { "Float64": 5 },
-              "EasingFunction": { "String": "InExponential" },
-              "Duration": { "Float64": 1 }
-            },
-            "Position": [0, 5, 60],
+          "Point2": {
+            "$path": "src/MovingPlatform/PathPoint.model.json",
+            "$properties": {
+              "Attributes": {
+                "Order": { "Float64": 2 },
+                "EasingFunction": { "String": "InOutSine" },
+                "Duration": { "Float64": 1 }
+              },
+              "Position": [0, 10, 15],
+            }
+          },
+          "Point3": {
+            "$path": "src/MovingPlatform/PathPoint.model.json",
+            "$properties": {
+              "Attributes": {
+                "Order": { "Float64": 3 },
+                "EasingFunction": { "String": "InOutQuad" },
+                "Duration": { "Float64": 1 }
+              },
+              "Position": [0, 5, 30],
+            }
+          },
+          "Point4": {
+            "$path": "src/MovingPlatform/PathPoint.model.json",
+            "$properties": {
+              "Attributes": {
+                "Order": { "Float64": 4 },
+                "EasingFunction": { "String": "InExponential" },
+                "Duration": { "Float64": 2 }
+              },
+              "Position": [0, 10, 45],
+            }
+          },
+          "Point5": {
+            "$path": "src/MovingPlatform/PathPoint.model.json",
+            "$properties": {
+              "Attributes": {
+                "Order": { "Float64": 5 },
+                "EasingFunction": { "String": "InExponential" },
+                "Duration": { "Float64": 1 }
+              },
+              "Position": [0, 5, 60],
+            }
           }
         }
       }
