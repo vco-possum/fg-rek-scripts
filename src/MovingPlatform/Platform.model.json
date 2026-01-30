@@ -2,8 +2,8 @@
   "ClassName": "Part",
   "Properties": {
     "Anchored": true,
-    "Tags": [ "animatable" ],
-    "Size": [4, 1, 4],
+    "Tags": [ "animatable", "platform" ],
+    "Size": [3, 2, 3],
     "Position": [0, 5, 0]
   }
 }
