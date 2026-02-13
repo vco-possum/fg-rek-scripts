@@ -1,8 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Animation = require(ReplicatedStorage.Shared.Animation.Animation)
-local EasingFunctions = require(ReplicatedStorage.Shared.Animation.EasingFunctions)
+local Animation = require(ReplicatedStorage.Animation.Animation)
+local EasingFunctions = require(ReplicatedStorage.Animation.EasingFunctions)
 
-local MovePlatformEvent = ReplicatedStorage.Shared:FindFirstChildOfClass("RemoteEvent")
+local MovePlatformEvent = ReplicatedStorage:FindFirstChildOfClass("RemoteEvent")
 
 function stepBetween(from: Part, to: Part): Animation.Step
 	return {
