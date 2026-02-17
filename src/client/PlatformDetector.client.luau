@@ -1,24 +1,24 @@
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
-local player = Players.LocalPlayer
+local DETECTOR_RAY = Vector3.new(0, -4, 0)
+local PLATFORM_TAG = "platform"
 
-player.CharacterAdded:Connect(function(character)
-	local humanoidRootPart = character.HumanoidRootPart
+Players.LocalPlayer.CharacterAdded:Connect(function(character)
+	local humanoid = character.HumanoidRootPart
 
-	local rayPath = Vector3.new(0, -4, 0)
 	local raycastParams = RaycastParams.new()
 	raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 	raycastParams.FilterDescendantsInstances = { character }
 
 	local lastPlatformPosition = nil
 	RunService.Heartbeat:Connect(function()
-		local result = workspace:Raycast(humanoidRootPart.CFrame.Position, rayPath, raycastParams)
+		local result = workspace:Raycast(humanoid.CFrame.Position, DETECTOR_RAY, raycastParams)
 
-		if result and result.Instance:HasTag("platform") then
+		if result and result.Instance:HasTag(PLATFORM_TAG) then
 			if lastPlatformPosition then
 				local displacement = result.Instance.CFrame * lastPlatformPosition:Inverse()
-				humanoidRootPart.CFrame = displacement * humanoidRootPart.CFrame
+				humanoid.CFrame = displacement * humanoid.CFrame
 			end
 
 			lastPlatformPosition = result.Instance.CFrame
