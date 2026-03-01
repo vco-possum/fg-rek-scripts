@@ -19,6 +19,15 @@ end
 function module.inExponential(x: number): number
 	return x == 0 and 0 or math.pow(2, 10 * x - 10)
 end
+function module.outExponential(x: number): number
+	return x == 1 and 1 or 1 - math.pow(2, -10 * x)
+end
+function module.inOutExponential(x: number): number
+	return x == 0 and 0
+		or x == 1 and 1
+		or x < 0.5 and math.pow(2, 20 * x - 10) / 2
+		or (2 - math.pow(2, -20 * x + 10)) / 2
+end
 
 function module.outSine(x: number): number
 	return math.sin((x * math.pi) / 2)
