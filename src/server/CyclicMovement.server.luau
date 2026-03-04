@@ -2,12 +2,11 @@ local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Steps = require(ReplicatedStorage.Animation.Steps)
-
-local CYCLICAL_ANIMATION_TAG = "cyclical"
+local Tags = require(ReplicatedStorage.Tags)
 
 workspace.PersistentLoaded:Wait()
 
-local events = CollectionService:GetTagged(CYCLICAL_ANIMATION_TAG)
+local events = CollectionService:GetTagged(Tags.MOVEMENT_LOOP)
 
 for _, event in ipairs(events) do
 	task.spawn(function()
@@ -15,14 +14,10 @@ for _, event in ipairs(events) do
 			local points = event.Parent.Path:GetChildren()
 			local steps = Steps.fromPoints(points)
 
-			local duration = 0
-			for _, step in ipairs(steps) do
-				duration += step.duration
-			end
-
 			event:FireAllClients()
 
-			if event.Parent:HasTag("cycle") then
+			local duration = Steps.totalDuration(steps)
+			if event.Parent:HasTag(Tags.MOVEMENT_CYCLE) then
 				task.wait(duration * 2)
 			else
 				task.wait(duration)

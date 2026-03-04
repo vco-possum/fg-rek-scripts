@@ -67,4 +67,13 @@ function module.reverse(step: Step): Step
 	}
 end
 
+function module.totalDuration(steps: { Step }): number
+	local duration = 0
+	for _, step in ipairs(steps) do
+		duration += step.duration
+	end
+
+	return duration
+end
+
 return module

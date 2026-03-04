@@ -1,6 +1,7 @@
 local CollectionService = game:GetService("CollectionService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local RIDE_SELECTOR_INTERFACE_TAG = "ride_selector_interface"
+local Tags = require(ReplicatedStorage.Tags)
 
 function selectVisually(button: TextButton)
 	button.BorderSizePixel = 5
@@ -16,7 +17,7 @@ function clearVisualSelection(buttons: { TextButton })
 	end
 end
 
-local interfaces = CollectionService:GetTagged(RIDE_SELECTOR_INTERFACE_TAG)
+local interfaces = CollectionService:GetTagged(Tags.RIDE_SELECTOR_INTERFACE)
 
 for _, interface in ipairs(interfaces) do
 	local buttons = interface.Options:GetChildren()
