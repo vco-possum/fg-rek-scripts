@@ -1,4 +1,5 @@
 local RunService = game:GetService("RunService")
+
 local Steps = require(script.Steps)
 
 export type Animation = {
@@ -6,6 +7,7 @@ export type Animation = {
 	Part: Instance,
 	Duration: number,
 	_Connection: RBXScriptConnection,
+	new: (points: BasePart, part: Part) -> Animation,
 	AnimateForward: (self: Animation) -> (),
 	AnimateBackward: (self: Animation) -> (),
 	Cycle: (self: Animation) -> (),
@@ -15,6 +17,24 @@ export type Animation = {
 
 local Animation = {} :: Animation
 Animation.__index = Animation
+
+function Animation.new(points: { PVInstance }, part: Part): Animation
+	local steps = Steps.fromPoints(points)
+
+	local duration = 0
+	for _, step in ipairs(steps) do
+		duration += step.duration
+	end
+
+	local self = setmetatable({}, Animation)
+	self.Steps = steps
+	self.Part = part
+	self._Connection = nil
+	self.Lock = false
+	self.Duration = duration
+
+	return self :: Animation
+end
 
 function Animation:AnimateForward()
 	self:_TerminateConnection()
@@ -73,24 +93,6 @@ function Animation:_TerminateConnection()
 	end
 end
 
-local module = {}
+table.freeze(Animation)
 
-function module.new(points: { BasePart }, part: Part): Animation
-	local steps = Steps.fromPoints(points)
-
-	local duration = 0
-	for _, step in ipairs(steps) do
-		duration += step.duration
-	end
-
-	local self = setmetatable({}, Animation)
-	self.Steps = steps
-	self.Part = part
-	self._Connection = nil
-	self.Lock = false
-	self.Duration = duration
-
-	return self :: Animation
-end
-
-return module
+return Animation

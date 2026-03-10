@@ -17,7 +17,7 @@ function clearVisualSelection(buttons: { TextButton })
 	end
 end
 
-local interfaces = CollectionService:GetTagged(Tags.RIDE_SELECTOR_INTERFACE)
+local interfaces = CollectionService:GetTagged(Tags.RIDE_SELECTOR.INTERFACE)
 
 for _, interface in ipairs(interfaces) do
 	local buttons = interface.Options:GetChildren()

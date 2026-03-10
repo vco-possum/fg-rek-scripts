@@ -6,7 +6,7 @@ local Tags = require(ReplicatedStorage.Tags)
 
 workspace.PersistentLoaded:Wait()
 
-local events = CollectionService:GetTagged(Tags.MOVEMENT_LOOP)
+local events = CollectionService:GetTagged(Tags.MOVEMENT.LOOP)
 
 for _, event in ipairs(events) do
 	task.spawn(function()
@@ -17,7 +17,7 @@ for _, event in ipairs(events) do
 			event:FireAllClients()
 
 			local duration = Steps.totalDuration(steps)
-			if event.Parent:HasTag(Tags.MOVEMENT_CYCLE) then
+			if event.Parent:HasTag(Tags.MOVEMENT.CYCLE) then
 				task.wait(duration * 2)
 			else
 				task.wait(duration)

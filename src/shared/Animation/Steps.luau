@@ -1,7 +1,7 @@
-local EasingFunctions = require(script.Parent.EasingFunctions)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local STEP_DURATION_ATTR = "Duration"
-local EASING_FUNCTION_ATTR = "EasingFunction"
+local Attributes = require(ReplicatedStorage.Attributes)
+local EasingFunctions = require(script.Parent.EasingFunctions)
 
 export type Step = {
 	from: Vector3,
@@ -16,9 +16,9 @@ export type Step = {
 
 export type StepIter = ({ Step }, number?) -> (number?, Step?)
 
-local module = {}
+local Steps = {}
 
-function module.iterateBackwards(collection: { Step }, idx: number?): number?
+function Steps.iterateBackwards(collection: { Step }, idx: number?): number?
 	if not idx then
 		return #collection - 1, collection[#collection]
 	end
@@ -30,31 +30,31 @@ function module.iterateBackwards(collection: { Step }, idx: number?): number?
 	end
 end
 
-function module.fromPoints(points: { BasePart }): { Step }
+function Steps.fromPoints(points: { PVInstance }): { Step }
 	local steps = {}
 	for i = 2, #points do
 		local previous = points[i - 1]
 		local current = points[i]
-		table.insert(steps, module.between(previous, current))
+		table.insert(steps, Steps.between(previous, current))
 	end
 
 	return steps
 end
 
-function module.between(from: Part, to: Part): Step
+function Steps.between(from: Part, to: Part): Step
 	return {
 		from = from.Position,
 		to = to.Position,
 		easingFunctions = { -- TODO: Make it read EasingFunctions for individual axis
-			x = EasingFunctions[from:GetAttribute(EASING_FUNCTION_ATTR)],
-			y = EasingFunctions[from:GetAttribute(EASING_FUNCTION_ATTR)],
-			z = EasingFunctions[from:GetAttribute(EASING_FUNCTION_ATTR)],
+			x = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
+			y = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
+			z = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
 		},
-		duration = from:GetAttribute(STEP_DURATION_ATTR),
+		duration = from:GetAttribute(Attributes.ANIMATION.STEP.DURATION),
 	}
 end
 
-function module.reverse(step: Step): Step
+function Steps.reverse(step: Step): Step
 	return {
 		from = step.to,
 		to = step.from,
@@ -67,7 +67,7 @@ function module.reverse(step: Step): Step
 	}
 end
 
-function module.totalDuration(steps: { Step }): number
+function Steps.totalDuration(steps: { Step }): number
 	local duration = 0
 	for _, step in ipairs(steps) do
 		duration += step.duration
@@ -76,4 +76,6 @@ function module.totalDuration(steps: { Step }): number
 	return duration
 end
 
-return module
+table.freeze(Steps)
+
+return Steps
