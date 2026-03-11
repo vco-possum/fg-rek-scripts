@@ -17,17 +17,17 @@ function clearVisualSelection(buttons: { TextButton })
 	end
 end
 
-local interfaces = CollectionService:GetTagged(Tags.RIDE_SELECTOR.INTERFACE)
+local interfaces = CollectionService:GetTagged(Tags.SELECTION_INTERFACE)
 
 for _, interface in ipairs(interfaces) do
-	local buttons = interface.Options:GetChildren()
+	local buttons = interface.Options:GetChildren() :: { TextButton }
 	local selected = interface.Selected :: ObjectValue
 
-	for _, button: TextButton in ipairs(buttons) do
+	for _, button in ipairs(buttons) do
 		button.MouseButton1Click:Connect(function()
 			clearVisualSelection(buttons)
 			selectVisually(button)
-			local pointer = button:FindFirstChildOfClass("ObjectValue")
+			local pointer = button.ObjectValue
 			selected.Value = pointer.Value
 		end)
 	end

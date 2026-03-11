@@ -6,17 +6,13 @@ local Utils = require(ReplicatedStorage.Utils)
 
 workspace.PersistentLoaded:Wait()
 
-local buttons = CollectionService:GetTagged(Tags.BUTTON_ANIMATION)
+local buttons = CollectionService:GetTagged(Tags.ANIMATED_BUTTON.ROOT)
 
 for _, button in ipairs(buttons) do
-	local animation = Utils.findFirstTaggedDescendant(button, Tags.MOVEMENT.ROOT)
+	local event = Utils.findFirstTaggedDescendant(button, Tags.ANIMATED_BUTTON.ANIMATION_TRIGGER) :: BindableEvent
+	local clickDetector = Utils.findFirstTaggedDescendant(button, Tags.ANIMATED_BUTTON.CLICK_DETECTOR) :: ClickDetector
 
-	if animation then
-		local clickDetector = button.Button.ClickDetector :: ClickDetector
-		local event = Utils.findFirstTaggedDescendant(animation, Tags.MOVEMENT.TRIGGER) :: BindableEvent
-
-		clickDetector.MouseClick:Connect(function()
-			event:Fire()
-		end)
-	end
+	clickDetector.MouseClick:Connect(function()
+		event:Fire()
+	end)
 end

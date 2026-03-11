@@ -1,5 +1,13 @@
 local Tags = {
-	BUTTON_ANIMATION = "button_animation",
+	ANIMATED_BUTTON = {
+		ROOT = "animated_button",
+		CLICK_DETECTOR = "animated_button_click_detector",
+		ANIMATION_TRIGGER = "animated_button_animation_trigger",
+	},
+	MONEY = {
+		SUBSTRACT = "money_substract",
+		ADD = "money_add",
+	},
 	MOVEMENT = {
 		ROOT = "movement",
 		CYCLE = "movement_cycle",
@@ -7,14 +15,11 @@ local Tags = {
 		TRIGGER = "movement_trigger",
 		TARGET = "movement_target",
 	},
+	SELECTION_INTERFACE = "selection_interface",
 	RIDE_SELECTOR = {
 		ROOT = "ride_selector",
-		INTERFACE = "ride_selector_interface",
 		TRIGGER = "ride_selector_trigger",
-	},
-	MONEY = {
-		SUBSTRACT = "money_substract",
-		ADD = "money_add",
+		TEXT_WINDOW = "ride_selector_text_window",
 	},
 }
 

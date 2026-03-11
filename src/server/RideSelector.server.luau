@@ -1,9 +1,8 @@
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerScriptService = game:GetService("ServerScriptService")
 
 local Constants = require(ReplicatedStorage.Constants)
-local Money = require(ServerScriptService.Money)
+local Money = require(ReplicatedStorage.Money)
 local Tags = require(ReplicatedStorage.Tags)
 local Utils = require(ReplicatedStorage.Utils)
 
@@ -15,12 +14,12 @@ function display(textLabel: TextLabel, message: string)
 end
 
 function setUp(selector: Model)
-	local interface = Utils.findFirstTaggedDescendant(selector, Tags.RIDE_SELECTOR.INTERFACE) :: SurfaceGui
+	local interface = Utils.findFirstTaggedDescendant(selector, Tags.SELECTION_INTERFACE) :: SurfaceGui
 	local trigger = Utils.findFirstTaggedDescendant(selector, Tags.RIDE_SELECTOR.TRIGGER) :: ClickDetector
 	local selected = interface.Selected :: ObjectValue
 
 	Utils.connectWithMutex(trigger.MouseClick, function(player: Player)
-		local textField = interface.TextField :: TextLabel
+		local textField = Utils.findFirstTaggedDescendant(interface, Tags.RIDE_SELECTOR.TEXT_WINDOW) :: TextLabel
 
 		if selected.Value == nil then
 			Utils.withRestorePrevious(textField, "Text", function()
