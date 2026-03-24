@@ -1,16 +1,19 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Attributes = require(ReplicatedStorage.Attributes)
-local EasingFunctions = require(script.Parent.EasingFunctions)
+local EasingFunctions = require(ReplicatedStorage.Animations.EasingFunctions)
 
 export type Step = {
-	from: Vector3,
-	to: Vector3,
-	easingFunctions: {
-		x: EasingFunctions.EasingFunction,
-		y: EasingFunctions.EasingFunction,
-		z: EasingFunctions.EasingFunction,
-	},
+	from: CFrame,
+	to: CFrame,
+	easingFunction: EasingFunctions.EasingFunction,
+	duration: number,
+}
+
+export type SerializedStep = {
+	from: CFrame,
+	to: CFrame,
+	easingFunction: string,
 	duration: number,
 }
 
@@ -41,16 +44,22 @@ function Steps.fromPoints(points: { PVInstance }): { Step }
 	return steps
 end
 
-function Steps.between(from: Part, to: Part): Step
+function Steps.between(from: PVInstance, to: PVInstance): Step
+	local easingFunction = from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION) :: string
 	return {
-		from = from.Position,
-		to = to.Position,
-		easingFunctions = { -- TODO: Make it read EasingFunctions for individual axis
-			x = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
-			y = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
-			z = EasingFunctions[from:GetAttribute(Attributes.ANIMATION.EASING_FUNCTION)],
-		},
+		from = from:GetPivot(),
+		to = to:GetPivot(),
+		easingFunction = EasingFunctions.fromString(easingFunction),
 		duration = from:GetAttribute(Attributes.ANIMATION.STEP.DURATION),
+	}
+end
+
+function Steps.deserialize(serialized: SerializedStep): Step
+	return {
+		from = serialized.from,
+		to = serialized.to,
+		easingFunction = EasingFunctions.fromString(serialized.easingFunction),
+		duration = serialized.duration,
 	}
 end
 
@@ -58,11 +67,7 @@ function Steps.reverse(step: Step): Step
 	return {
 		from = step.to,
 		to = step.from,
-		easingFunctions = {
-			x = EasingFunctions.inverse(step.easingFunctions.x),
-			y = EasingFunctions.inverse(step.easingFunctions.y),
-			z = EasingFunctions.inverse(step.easingFunctions.z),
-		},
+		easingFunction = step.easingFunction,
 		duration = step.duration,
 	}
 end

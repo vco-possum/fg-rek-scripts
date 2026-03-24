@@ -1,13 +1,14 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
-local Steps = require(script.Steps)
+local Steps = require(ReplicatedStorage.Animations.Steps)
 
 export type Animation = {
 	Steps: { Steps.Step },
-	Part: Instance,
+	Part: PVInstance,
 	Duration: number,
 	_Connection: RBXScriptConnection,
-	new: (points: BasePart, part: Part) -> Animation,
+	new: (points: { Steps.Step }, part: Part) -> Animation,
 	AnimateForward: (self: Animation) -> (),
 	AnimateBackward: (self: Animation) -> (),
 	Cycle: (self: Animation) -> (),
@@ -18,24 +19,6 @@ export type Animation = {
 local Animation = {} :: Animation
 Animation.__index = Animation
 
-function Animation.new(points: { PVInstance }, part: Part): Animation
-	local steps = Steps.fromPoints(points)
-
-	local duration = 0
-	for _, step in ipairs(steps) do
-		duration += step.duration
-	end
-
-	local self = setmetatable({}, Animation)
-	self.Steps = steps
-	self.Part = part
-	self._Connection = nil
-	self.Lock = false
-	self.Duration = duration
-
-	return self :: Animation
-end
-
 function Animation:AnimateForward()
 	self:_TerminateConnection()
 
@@ -45,11 +28,11 @@ end
 function Animation:AnimateBackward()
 	self:_TerminateConnection()
 
-	local backwards: Steps.StepIter = function(steps, idx)
+	local previous: Steps.StepIter = function(steps, idx)
 		local nextIdx, step = Steps.iterateBackwards(steps, idx)
 		return nextIdx, Steps.reverse(step)
 	end
-	self:_Animate(backwards)
+	self:_Animate(previous)
 end
 
 function Animation:Cycle()
@@ -58,6 +41,7 @@ function Animation:Cycle()
 	self:AnimateForward()
 	task.wait(self.Duration)
 	self:AnimateBackward()
+	task.wait(self.Duration)
 end
 
 function Animation:_Animate(iter: Steps.StepIter, initIdx: number?)
@@ -70,14 +54,7 @@ function Animation:_Animate(iter: Steps.StepIter, initIdx: number?)
 	self._Connection = RunService.PreSimulation:Connect(function(deltaTime)
 		progress = math.clamp(progress + deltaTime / step.duration, 0, 1)
 
-		local easing = Vector3.new(
-			step.easingFunctions.x(progress),
-			step.easingFunctions.y(progress),
-			step.easingFunctions.z(progress)
-		)
-		local displacement = (step.to - step.from) * easing
-		local newPosition = step.from + displacement
-		self.Part.CFrame = CFrame.new(newPosition)
+		self.Part.CFrame = step.from:Lerp(step.to, step.easingFunction(progress))
 
 		if progress >= 1 then
 			self:_TerminateConnection()
@@ -95,4 +72,22 @@ end
 
 table.freeze(Animation)
 
-return Animation
+local Constructor = {}
+function Constructor.new(steps: { Steps.Step }, part: PVInstance): Animation
+	local duration = 0
+
+	for _, step in ipairs(steps) do
+		duration += step.duration
+	end
+
+	local self = setmetatable({}, Animation)
+	self.Steps = steps
+	self.Part = part
+	self._Connection = nil
+	self.Lock = false
+	self.Duration = duration
+
+	return self :: Animation
+end
+
+return Constructor

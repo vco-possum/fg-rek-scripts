@@ -10,8 +10,8 @@ local Tags = {
 	},
 	MOVEMENT = {
 		ROOT = "movement",
-		CYCLE = "movement_cycle",
-		LOOP = "movement_loop",
+		CYCLE = "movement_cycle", -- NOTE: This might be better set by attr?
+		LOOP_FOREVER = "movement_loop_forever",
 		TRIGGER = "movement_trigger",
 		TARGET = "movement_target",
 	},
@@ -20,6 +20,13 @@ local Tags = {
 		ROOT = "ride_selector",
 		TRIGGER = "ride_selector_trigger",
 		TEXT_WINDOW = "ride_selector_text_window",
+	},
+	WHACK_A_RAT = {
+		ROOT = "whack_a_rat",
+		RAT = "whack_a_rat_rat",
+		BOX = "whack_a_rat_box",
+		INTERFACE = "whack_a_rat_interface",
+		CONFETTI_EMITTER = "whack_a_rat_confetti_emitter",
 	},
 }
 

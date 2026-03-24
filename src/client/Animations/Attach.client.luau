@@ -1,8 +1,10 @@
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterPlayer = game:GetService("StarterPlayer")
 
-local Animation = require(ReplicatedStorage.Animation)
+local Animations = require(StarterPlayer.StarterPlayerScripts.Animations)
 local Attributes = require(ReplicatedStorage.Attributes)
+local Steps = require(ReplicatedStorage.Animations.Steps)
 local Tags = require(ReplicatedStorage.Tags)
 local Utils = require(ReplicatedStorage.Utils)
 
@@ -22,8 +24,9 @@ for _, movement in ipairs(movements) do
 	table.sort(pathPoints, sortByOrder)
 
 	local movementTargets = Utils.findDescendantsWithTag(movement.Parent, Tags.MOVEMENT.TARGET)
-	for _, target: Instance in ipairs(movementTargets) do
-		local animation = Animation.new(pathPoints, target)
+	for _, target: PVInstance in ipairs(movementTargets) do
+		local steps = Steps.fromPoints(pathPoints) -- NOTE: Move to server-side, so that points/steps are sent from server?
+		local animation = Animations.new(steps, target)
 		local fire = Utils.findFirstTaggedDescendant(movement, Tags.MOVEMENT.TRIGGER) :: Instance
 
 		local animate = if movement:HasTag(Tags.MOVEMENT.CYCLE) then animation.Cycle else animation.AnimateForward
