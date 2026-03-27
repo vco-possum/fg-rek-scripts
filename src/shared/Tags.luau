@@ -23,10 +23,11 @@ local Tags = {
 	},
 	WHACK_A_RAT = {
 		ROOT = "whack_a_rat",
-		RAT = "whack_a_rat_rat",
 		BOX = "whack_a_rat_box",
-		INTERFACE = "whack_a_rat_interface",
 		CONFETTI_EMITTER = "whack_a_rat_confetti_emitter",
+		INTERFACE = "whack_a_rat_interface",
+		RAT = "whack_a_rat_rat",
+		SEAT = "whack_a_rat_seat",
 	},
 }
 

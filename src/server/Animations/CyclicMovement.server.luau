@@ -12,10 +12,12 @@ local function setUp(movement)
 	while true do
 		task.spawn(function()
 			local trigger: RemoteEvent = movement.Fire
-			trigger:FireAllClients()
+
+			local serverTimestamp = workspace:GetServerTimeNow()
+			trigger:FireAllClients(serverTimestamp)
 		end)
 
-		if movement:HasTag(Tags.MOVEMENT.LOOP_FOREVER) then
+		if movement:HasTag(Tags.MOVEMENT.CYCLE) then
 			task.wait(duration * 2)
 		else
 			task.wait(duration)

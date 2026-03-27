@@ -52,7 +52,9 @@ local function firePlatform(selector, selected)
 		selector.Parent = nil
 
 		local movementEvent = selected.Value.Fire :: RemoteEvent
-		movementEvent:FireAllClients()
+
+		local serverTimestamp = workspace:GetServerTimeNow()
+		movementEvent:FireAllClients(serverTimestamp)
 
 		task.wait(Constants.RIDE_SELECTOR.DISSAPEAR_DEBOUNCE)
 	end)

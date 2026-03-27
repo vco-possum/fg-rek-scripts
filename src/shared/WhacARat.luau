@@ -14,6 +14,7 @@ export type RatInterface = Interfaces.Interface & {
 
 export type Rat = MeshPart & {
 	JumpOut: RemoteEvent,
+	OnHit: RemoteEvent,
 	ClickDetector: ClickDetector,
 }
 

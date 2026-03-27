@@ -1,4 +1,5 @@
 local Constants = {
+	SAWN_POSITION = CFrame.new(Vector3.new(0, 3, 0)),
 	LEADERSTATS = {
 		NAME = "leaderstats",
 	},

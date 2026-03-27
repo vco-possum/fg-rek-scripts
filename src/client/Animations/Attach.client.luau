@@ -31,11 +31,12 @@ for _, movement in ipairs(movements) do
 
 		local animate = if movement:HasTag(Tags.MOVEMENT.CYCLE) then animation.Cycle else animation.AnimateForward
 		if fire:IsA("RemoteEvent") then
-			fire.OnClientEvent:Connect(function()
-				animate(animation)
+			fire.OnClientEvent:Connect(function(serverTimestamp: number)
+				local clientTimestamp: number = workspace:GetServerTimeNow()
+				animate(animation, clientTimestamp - serverTimestamp)
 			end)
 		elseif fire:IsA("BindableEvent") then
-			fire.Event:Connect(function()
+			fire.Event:Connect(function(serverTimestamp: number)
 				animate(animation)
 			end)
 		end
