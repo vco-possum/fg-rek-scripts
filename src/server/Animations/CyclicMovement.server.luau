@@ -9,20 +9,20 @@ local function setUp(movement)
 	local steps = Steps.fromPoints(points)
 	local duration = Steps.totalDuration(steps)
 
-	while true do
-		task.spawn(function()
+	task.spawn(function()
+		while true do
 			local trigger: RemoteEvent = movement.Fire
 
 			local serverTimestamp = workspace:GetServerTimeNow()
 			trigger:FireAllClients(serverTimestamp)
-		end)
 
-		if movement:HasTag(Tags.MOVEMENT.CYCLE) then
-			task.wait(duration * 2)
-		else
-			task.wait(duration)
+			if movement:HasTag(Tags.MOVEMENT.CYCLE) then
+				task.wait(duration * 2)
+			else
+				task.wait(duration)
+			end
 		end
-	end
+	end)
 end
 
 workspace.PersistentLoaded:Wait()
